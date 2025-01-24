@@ -1,51 +1,53 @@
-# Public Health Insights Blog
+# 🩺 Public Health Analytics Dashboard
 
-![Blog Screenshot](https://via.placeholder.com/800x400.png?text=Public+Health+Insights+Screenshot)
+Modern public health monitoring platform with evidence-based visualizations powered by Astro & Markdown.
 
-A professional public health blog built with Astro featuring evidence-based research articles and data-driven insights.
+## ✨ Features
 
-## Features
+- 📈 5 Interactive data dashboards
+- 📚 MDX-powered article system
+- 🔄 Article navigation controls
+- 📱 Mobile-optimized layout
+- 🎨 Clean white/blue theme
+- ♿ WCAG-compliant interface
 
-- Responsive, clean design with blue/white theme
-- Markdown-based blog posts
-- Article navigation system
-- Author and publication metadata
-- Interactive data visualizations
-- SEO-friendly structure
-- Mobile-first approach
+## ⚙️ Installation
 
-## Tech Stack
+1. **Prerequisites**
+   - Node.js ≥18.x
+   - npm ≥9.x
 
-- [Astro](https://astro.build)
-- TypeScript (optional)
-- CSS Modules
+2. **Setup**
+   ```bash
+   npm install
+   ```
 
-## Installation
+## 🚦 Usage
 
-1. Clone the repository:
-```bash
-git clone https://github.com/vipervs/public-health-blog.git
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Start development server:
 ```bash
 npm run dev
 ```
+- Dashboard runs on `localhost:4321`
+- Click navigation arrows between articles
+- Automatic browser launch on dev start
 
-4. Build for production:
-```bash
-npm run build
-```
+## 🎨 Customization
 
-## License
-Distributed under the MIT License. See `LICENSE` for more information.
+- Add articles: `src/pages/blog/*.md`
+- Modify metrics: Update markdown tables
+- Adjust theme colors: `src/layouts/Layout.astro`
+- Edit navigation: `src/components/ArticleNavigation.astro`
 
-## Acknowledgments
-- Astro Documentation
-- World Health Organization reports
-- Public health researchers worldwide
+📌 **Pro Tip:** Use ASCII tables in markdown for clean data presentation!
+
+## 🛠️ Tech Stack
+
+- Astro 4.15
+- Markdown/MDX
+- CSS Modules
+- Responsive Grid
+- GitHub Flavored Markdown
+
+## 📄 License
+
+MIT
