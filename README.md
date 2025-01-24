@@ -24,7 +24,7 @@ A professional public health blog built with Astro featuring evidence-based rese
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/your-username/public-health-blog.git
+git clone https://github.com/vipervs/public-health-blog.git
 ```
 
 2. Install dependencies:
