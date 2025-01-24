@@ -1,0 +1,224 @@
+---
+import Layout from '../layouts/Layout.astro';
+const posts = await Astro.glob('./blog/*.md');
+const latestPosts = posts
+  .sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date))
+  .slice(0, 3);
+---
+
+<Layout title="Home">
+  <main class="homepage">
+    <div class="hero">
+      <div class="hero-content">
+        <div class="title-container">
+          <h1>
+            <span class="gradient-text">Advancing</span> Public Health<br>
+            Through Evidence-Based Research
+          </h1>
+          <div class="subtitle-box">
+            <p class="subtitle">Expert analysis on global health challenges<br>and innovative solutions</p>
+          </div>
+        </div>
+        <div class="decorative-elements">
+          <div class="pulse-dot"></div>
+          <div class="data-line"></div>
+        </div>
+      </div>
+    </div>
+    
+    <section class="featured-content">
+      <h2>Latest Insights</h2>
+      <div class="insights-grid">
+        {latestPosts.map(post => (
+          <article class="insight-card">
+            <div class="card-content">
+              <h3><a href={post.url}>{post.frontmatter.title}</a></h3>
+              <p class="excerpt">{post.frontmatter.excerpt}</p>
+              <div class="card-meta">
+                <span class="author">{post.frontmatter.author}</span>
+                <time>{new Date(post.frontmatter.date).toLocaleDateString()}</time>
+              </div>
+              <a href={post.url} class="read-more">Read More →</a>
+            </div>
+          </article>
+        ))}
+      </div>
+      <a href="/blog" class="cta-button">View All Articles →</a>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .homepage {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .hero {
+    position: relative;
+    padding: 8rem 2rem;
+    background: linear-gradient(135deg, var(--light-blue) 0%, white 100%);
+    overflow: hidden;
+    margin-bottom: 4rem;
+  }
+
+  .hero-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  h1 {
+    font-size: 3.5rem;
+    line-height: 1.1;
+    color: var(--dark-gray);
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .gradient-text {
+    background: linear-gradient(45deg, var(--primary-blue), var(--secondary-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+  }
+
+  .subtitle-box {
+    border-left: 4px solid var(--secondary-blue);
+    padding-left: 2rem;
+    margin-top: 2.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.5rem;
+    color: var(--text-gray);
+    line-height: 1.4;
+    max-width: 700px;
+  }
+
+  .decorative-elements {
+    position: absolute;
+    top: -50px;
+    right: -100px;
+    width: 600px;
+    height: 600px;
+    opacity: 0.1;
+    z-index: 1;
+  }
+
+  .pulse-dot {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: var(--primary-blue);
+    border-radius: 50%;
+    top: 30%;
+    left: 40%;
+    animation: pulse 2s infinite;
+  }
+
+  .data-line {
+    position: absolute;
+    width: 2px;
+    height: 80%;
+    background: var(--secondary-blue);
+    left: 50%;
+    transform: rotate(35deg);
+  }
+
+  .featured-content {
+    padding: 4rem 2rem;
+    background: white;
+  }
+
+  .insights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+
+  .insight-card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+  }
+
+  .insight-card:hover {
+    transform: translateY(-3px);
+  }
+
+  .insight-card h3 {
+    font-size: 1.25rem;
+    color: var(--primary-blue);
+    margin-bottom: 0.75rem;
+  }
+
+  .excerpt {
+    color: var(--text-gray);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+
+  .card-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--primary-blue);
+    margin-bottom: 1rem;
+  }
+
+  .read-more {
+    display: inline-block;
+    font-weight: 600;
+    color: var(--secondary-blue);
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
+  }
+
+  .cta-button {
+    display: inline-block;
+    background: var(--primary-blue);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    margin-top: 2rem;
+    transition: background 0.2s ease;
+  }
+
+  .cta-button:hover {
+    background: var(--secondary-blue);
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(0.8); opacity: 0.8; }
+    50% { transform: scale(1.2); opacity: 0.4; }
+    100% { transform: scale(0.8); opacity: 0.8; }
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 2.5rem;
+    }
+    
+    .subtitle {
+      font-size: 1.2rem;
+    }
+    
+    .decorative-elements {
+      display: none;
+    }
+    
+    .hero {
+      padding: 4rem 1rem;
+    }
+    
+    .featured-content {
+      padding: 2rem 1rem;
+    }
+  }
+</style>

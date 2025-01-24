@@ -1,0 +1,121 @@
+---
+const allPosts = await Astro.glob('../pages/blog/*.md');
+const sortedPosts = allPosts.sort((a, b) => 
+  new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime()
+);
+
+const currentPath = Astro.url.pathname;
+const currentIndex = sortedPosts.findIndex(post => post.url === currentPath);
+const prevPost = currentIndex < sortedPosts.length - 1 ? sortedPosts[currentIndex + 1] : null;
+const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
+---
+
+<nav class="article-navigation">
+  <div class="nav-container">
+    <a href="/blog" class="home-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+      </svg>
+      Articles
+    </a>
+    
+    <div class="nav-buttons">
+      {prevPost && (
+        <a href={prevPost.url} class="nav-button prev" title={prevPost.frontmatter.title}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span>Previous</span>
+        </a>
+      )}
+      
+      {nextPost && (
+        <a href={nextPost.url} class="nav-button next" title={nextPost.frontmatter.title}>
+          <span>Next</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      )}
+    </div>
+  </div>
+</nav>
+
+<style>
+  .article-navigation {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+  }
+
+  .nav-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .home-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary-blue);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+  }
+
+  .home-link:hover {
+    background-color: var(--light-blue);
+  }
+
+  .nav-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .nav-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-gray);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+
+  .nav-button:hover {
+    background-color: var(--light-blue);
+    color: var(--primary-blue);
+  }
+
+  .prev {
+    padding-left: 0.5rem;
+  }
+
+  .next {
+    padding-right: 0.5rem;
+  }
+
+  @media (max-width: 640px) {
+    .nav-button span {
+      display: none;
+    }
+    
+    .home-link span {
+      display: none;
+    }
+  }
+</style>

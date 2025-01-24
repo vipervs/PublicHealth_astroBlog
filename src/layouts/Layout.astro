@@ -1,0 +1,94 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title} | Public Health Insights</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav>
+        <a href="/" class="logo">PublicHealth<span>Insights</span></a>
+        <a href="/blog" class="nav-link">Blog</a>
+      </nav>
+    </header>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --primary-blue: #2A5C82;
+    --secondary-blue: #4A90E2;
+    --light-blue: #EFF6FF;
+    --dark-gray: #2D3748;
+    --text-gray: #4A5568;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    color: var(--dark-gray);
+    background: #ffffff;
+  }
+
+  a {
+    color: var(--primary-blue);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  a:hover {
+    color: var(--secondary-blue);
+  }
+</style>
+
+<style>
+  .site-header {
+    background: var(--primary-blue);
+    padding: 1rem 0;
+  }
+
+  nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    color: white;
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+
+  .logo span {
+    font-weight: 400;
+    color: var(--light-blue);
+  }
+
+  .nav-link {
+    color: white;
+    font-weight: 500;
+  }
+</style>

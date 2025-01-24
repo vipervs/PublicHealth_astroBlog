@@ -1,0 +1,136 @@
+---
+import Layout from './Layout.astro';
+import ArticleNavigation from '../components/ArticleNavigation.astro';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    date: string;
+    author: string;
+    excerpt: string;
+  };
+}
+
+const { frontmatter } = Astro.props;
+
+// Format the date
+const formattedDate = new Date(frontmatter.date).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<Layout title={frontmatter.title}>
+  <article class="blog-post">
+    <header class="post-header">
+      <div class="meta-container">
+        <h1>{frontmatter.title}</h1>
+        <p class="excerpt">{frontmatter.excerpt}</p>
+        <div class="post-meta">
+          <div>
+            <span class="meta-label">Author</span>
+            <span>{frontmatter.author}</span>
+          </div>
+          <div>
+            <span class="meta-label">Published</span>
+            <time>{formattedDate}</time>
+          </div>
+        </div>
+      </div>
+    </header>
+    
+    <div class="content">
+      <slot />
+    </div>
+  </article>
+  <ArticleNavigation />
+</Layout>
+
+<style>
+  .blog-post {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    padding-bottom: 5rem;
+  }
+
+  .post-header {
+    border-bottom: 2px solid var(--light-blue);
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+    color: var(--primary-blue);
+    margin-bottom: 1rem;
+  }
+
+  .excerpt {
+    font-size: 1.125rem;
+    color: var(--text-gray);
+    margin-bottom: 2rem;
+  }
+
+  .post-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 2rem;
+    background: var(--light-blue);
+    padding: 1.5rem;
+    border-radius: 8px;
+  }
+
+  .meta-label {
+    display: block;
+    font-weight: 600;
+    color: var(--primary-blue);
+    margin-bottom: 0.25rem;
+  }
+
+  .content {
+    line-height: 1.8;
+    color: var(--text-gray);
+  }
+
+  .content :global(h2) {
+    color: var(--primary-blue);
+    margin: 2rem 0 1rem;
+  }
+
+  .content :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+  }
+
+  .content :global(th),
+  .content :global(td) {
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+  }
+
+  .content :global(th) {
+    background: var(--light-blue);
+    color: var(--primary-blue);
+    font-weight: 600;
+  }
+
+  .content :global(blockquote) {
+    border-left: 4px solid var(--secondary-blue);
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+    color: var(--text-gray);
+    font-style: italic;
+  }
+
+  .content :global(pre) {
+    background: var(--light-blue);
+    padding: 1rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-family: monospace;
+    margin: 1.5rem 0;
+  }
+</style>

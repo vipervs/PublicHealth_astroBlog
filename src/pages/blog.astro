@@ -1,0 +1,96 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const posts = await Astro.glob('./blog/*.md');
+---
+
+<Layout title="Blog">
+  <main class="blog-listing">
+    <div class="header-container">
+      <h1>Public Health Research & Analysis</h1>
+      <p class="section-description">Peer-reviewed insights from global health experts</p>
+    </div>
+
+    <div class="posts-grid">
+      {posts.sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date)).map(post => (
+        <article class="post-card">
+          <div class="card-content">
+            <h2><a href={post.url}>{post.frontmatter.title}</a></h2>
+            <p class="excerpt">{post.frontmatter.excerpt}</p>
+            <div class="card-meta">
+              <span class="author">{post.frontmatter.author}</span>
+              <time>{new Date(post.frontmatter.date).toLocaleDateString()}</time>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .blog-listing {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+
+  .header-container {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  h1 {
+    color: var(--primary-blue);
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .section-description {
+    color: var(--text-gray);
+    font-size: 1.125rem;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .post-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+    border: 1px solid #e2e8f0;
+  }
+
+  .post-card:hover {
+    transform: translateY(-3px);
+  }
+
+  .card-content {
+    padding: 1.5rem;
+  }
+
+  .card-content h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .excerpt {
+    color: var(--text-gray);
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+  }
+
+  .card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.875rem;
+    color: var(--primary-blue);
+    margin-top: 1rem;
+  }
+</style>
